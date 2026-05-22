@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import GoogleIcon from "../../components/GoogleIcon";
 import InputField from "../../components/InputField";
 
-
-export default function LoginScreen() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -11,10 +12,8 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-
   const handleLogin = (e) => {
     e.preventDefault();
-    
   };
 
   const handleGoogleLogin = (e) => {
@@ -24,20 +23,24 @@ export default function LoginScreen() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className="container-login">
+      <div className="card">
         {!success ? (
           <>
-            <h1 style={styles.title}>Welcome back</h1>
-            <p style={styles.subtitle}>Sign in to your account to continue</p>
+            <h1 className="title">Connexion</h1>
+            <p className="subtitle">
+              Connectez-vous à votre compte pour continuer
+            </p>
 
             <InputField
               label="Email"
               id="email"
               type="email"
-              placeholder="name@example.com"
+              placeholder="email@example.com"
               value={email}
-              onChange={(e) => { setEmail(e.target.value) }}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               onFocus={() => setFocused("email")}
               isFocused={focused === "email"}
               icon="✉"
@@ -49,62 +52,63 @@ export default function LoginScreen() {
               type={showPw ? "text" : "password"}
               placeholder="••••••••"
               value={password}
-              onChange={(e) => { setPassword(e.target.value); }}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               onFocus={() => setFocused("password")}
               isFocused={focused === "password"}
-              
-              
+              icon="🔒"
             />
 
-            <div style={styles.row}>
-              <label style={styles.checkboxLabel}>
+            <div className="row">
+              <label className="checkbox-label">
                 <input
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  style={styles.checkbox}
                 />
-                Remember me
+                Se souvenir de moi
               </label>
-              <a href="#" style={styles.forgotLink} onClick={(e) => e.preventDefault()}>
-                Forgot password?
+              <a href="#" onClick={(e) => e.preventDefault()}>
+                Mot de passe oublié?
               </a>
             </div>
 
             <button
-              style={{
-                ...styles.btnPrimary,
-                ...(loading ? styles.btnPrimaryDisabled : {}),
-              }}
+              className="btn-primary"
               onClick={handleLogin}
               disabled={loading}
             >
-              {loading ? "Signing in…" : "Sign in"}
+              {loading ? "En cours…" : "Se connecter"}
             </button>
 
-            <div style={styles.divider}>
-              <hr style={styles.dividerLine} />
-              <span style={styles.dividerText}>or continue with</span>
-              <hr style={styles.dividerLine} />
+            <div className="divider">
+              <hr className="divider-line" />
+              <span className="divider-text">ou continuer avec</span>
+              <hr className="divider-line" />
             </div>
 
-            <button style={styles.btnGoogle} onClick={handleGoogleLogin}>
+            <button className="btn-google" onClick={handleGoogleLogin}>
               <GoogleIcon />
-              Sign in with Google
+              Se connecter avec Google
             </button>
 
-            <p style={styles.signupText}>
+            <p className="signup-text">
               Don&apos;t have an account?{" "}
-              <a href="#" style={styles.signupLink} onClick={(e) => e.preventDefault()}>
-                Create one
+              <a
+                href="#"
+                className="signup-link"
+                onClick={(e) => e.preventDefault()}
+              >
+                Créer un compte
               </a>
             </p>
           </>
         ) : (
-          <div style={styles.successBox}>
-            <div style={styles.successIcon}>✅</div>
-            <p style={styles.successTitle}>Signed in successfully!</p>
-            <p style={styles.successSub}>Redirecting you to dashboard…</p>
+          <div className="success-box">
+            <div className="success-icon">✅</div>
+            <p className="success-title">Connexion réussie!</p>
+            <p className="success-sub">Redirection vers le tableau de bord…</p>
           </div>
         )}
       </div>
