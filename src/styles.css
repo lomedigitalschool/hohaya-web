@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   THEME VARIABLES — modifie ici pour changer
+   le thème de toutes les pages auth d'un coup
+   ============================================ */
+:root {
+  /* Couleurs principales */
+  --color-primary:        #9d27a8;   /* bouton principal, liens actifs */
+  --color-primary-hover:  #821e8f;   /* hover bouton principal */
+  --color-primary-focus:  rgba(39, 168, 108, 0.15); /* ring focus input */
+
+  --color-logo-bg:        #1a1a2e;   /* fond du logo */
+  --color-accent:         #a82797;   /* liens (forgot, signup, terms…) */
+
+  /* Fond & carte */
+  --color-page-bg:        #f5f5f0;
+  --color-card-bg:        #ffffff;
+  --color-card-shadow:    0 1px 3px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
+
+  /* Textes */
+  --color-text-title:     #111111;
+  --color-text-subtitle:  #888888;
+  --color-text-label:     #555555;
+  --color-text-muted:     #aaaaaa;
+
+  /* Inputs */
+  --color-input-bg:       #fafafa;
+  --color-input-bg-focus: #ffffff;
+  --color-input-border:   #e0e0e0;
+  --color-input-icon:     #aaaaaa;
+
+  /* Etats */
+  --color-error:          #e53e3e;
+  --color-success:        #48bb78;
+
+  /* Google btn */
+  --color-google-bg:      #ffffff;
+  --color-google-border:  #e0e0e0;
+  --color-google-text:    #333333;
+
+  /* Misc */
+  --color-divider:        #eeeeee;
+  --color-checkbox:       var(--color-primary);
+  --radius-card:          1rem;
+  --radius-input:         0.75rem;
+  --radius-btn:           0.75rem;
+  --radius-logo:          0.625rem;
+}
+
+/* ============================================
+   DARK THEME EXAMPLE — décommenter pour tester
+   ============================================ */
+/*
+:root {
+  --color-primary:        #34d399;
+  --color-primary-hover:  #10b981;
+  --color-primary-focus:  rgba(52, 211, 153, 0.15);
+  --color-logo-bg:        #34d399;
+  --color-accent:         #34d399;
+  --color-page-bg:        #0f172a;
+  --color-card-bg:        #1e293b;
+  --color-card-shadow:    0 1px 3px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+  --color-text-title:     #f1f5f9;
+  --color-text-subtitle:  #94a3b8;
+  --color-text-label:     #cbd5e1;
+  --color-text-muted:     #64748b;
+  --color-input-bg:       #0f172a;
+  --color-input-bg-focus: #1e293b;
+  --color-input-border:   #334155;
+  --color-input-icon:     #64748b;
+  --color-google-bg:      #1e293b;
+  --color-google-border:  #334155;
+  --color-google-text:    #f1f5f9;
+  --color-divider:        #334155;
+}
+*/
+
+@layer components {
+
+  .container-login {
+    @apply min-h-screen flex items-center justify-center px-4 py-8 font-serif;
+    background-color: var(--color-page-bg);
+  }
+
+  .card {
+    @apply rounded-2xl p-10 w-full max-w-[420px];
+    background-color: var(--color-card-bg);
+    box-shadow: var(--color-card-shadow);
+    border-radius: var(--radius-card);
+  }
+
+  .logo {
+    @apply w-11 h-11 flex items-center justify-center mb-6 text-[22px];
+    background-color: var(--color-logo-bg);
+    border-radius: var(--radius-logo);
+  }
+
+  .title {
+    @apply text-2xl font-semibold mb-1 tracking-tight;
+    color: var(--color-text-title);
+  }
+
+  .subtitle {
+    @apply text-sm mb-4;
+    color: var(--color-text-subtitle);
+  }
+
+  .field-wrapper {
+    @apply mb-4;
+  }
+
+  .label {
+    @apply block text-xs font-medium mb-1 font-sans;
+    color: var(--color-text-label);
+  }
+
+  .input-wrap {
+    @apply relative;
+  }
+
+  .input-icon {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-base;
+    color: var(--color-input-icon);
+  }
+
+  .input {
+    @apply w-full pl-4 pr-3 py-2 text-sm outline-none box-border font-sans transition;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--radius-input);
+    color: var(--color-text-title);
+  }
+
+  .input:focus {
+    background-color: var(--color-input-bg-focus);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-focus);
+  }
+
+  .input-error {
+    border-color: var(--color-error) !important;
+  }
+
+  .toggle-pw {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-0 cursor-pointer text-sm;
+    color: var(--color-input-icon);
+  }
+
+  .error-text {
+    @apply text-xs mt-1 font-sans;
+    color: var(--color-error);
+  }
+
+  /* Prénom + Nom côte à côte */
+  .row-fields {
+    @apply flex gap-3;
+  }
+
+  .row {
+    @apply flex justify-between items-center mb-6;
+  }
+
+  .checkbox-label {
+    @apply flex items-center gap-2 text-xs cursor-pointer font-sans;
+    color: var(--color-text-subtitle);
+    accent-color: var(--color-checkbox);
+  }
+
+  .forgot-link {
+    @apply text-xs no-underline;
+    color: var(--color-accent);
+  }
+
+  .btn-primary {
+    @apply w-full py-3 text-white border-0 text-sm font-medium cursor-pointer my-4 tracking-wide transition-opacity;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-btn);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .btn-primary:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  .divider {
+    @apply flex items-center gap-2 mb-4;
+  }
+
+  .divider-line {
+    @apply flex-1 border-0 border-t;
+    border-color: var(--color-divider);
+  }
+
+  .divider-text {
+    @apply text-xs whitespace-nowrap font-sans;
+    color: var(--color-text-muted);
+  }
+
+  .btn-google {
+    @apply w-full py-2.5 text-sm cursor-pointer flex items-center justify-center gap-2 mb-4 transition;
+    background-color: var(--color-google-bg);
+    border: 1px solid var(--color-google-border);
+    border-radius: var(--radius-btn);
+    color: var(--color-google-text);
+  }
+
+  .btn-google:hover {
+    filter: brightness(0.97);
+  }
+
+  .signup-text {
+    @apply text-center text-xs;
+    color: var(--color-text-muted);
+  }
+
+  .signup-link {
+    @apply font-medium no-underline;
+    color: var(--color-accent);
+  }
+
+  /* Password strength bar */
+  .strength-bar {
+    @apply mt-1 mb-3;
+  }
+
+  .strength-track {
+    @apply h-1 rounded-full overflow-hidden mb-1;
+    background-color: var(--color-divider);
+  }
+
+  .strength-fill {
+    @apply h-full rounded-full transition-all duration-300;
+  }
+
+  .strength-label {
+    @apply text-[11px] font-sans;
+  }
+
+  /* Success */
+  .success-box {
+    @apply text-center py-6;
+  }
+
+  .success-icon {
+    @apply text-5xl mb-3;
+  }
+
+  .success-title {
+    @apply text-sm font-semibold mb-1;
+    color: var(--color-text-title);
+  }
+
+  .success-sub {
+    @apply text-xs;
+    color: var(--color-text-muted);
+  }
+}

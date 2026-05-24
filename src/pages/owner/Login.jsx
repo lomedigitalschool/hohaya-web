@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import api from "../../services/Api";
+import { Link } from "react-router-dom";
 import GoogleIcon from "../../components/GoogleIcon";
 import InputField from "../../components/InputField";
 
@@ -12,8 +13,24 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const res = await api.post("/auth/login", { email, password });
+      localStorage.clear()
+      const accessToken  = res.data.accessToken;
+      const refreshToken = res.data.refreshToken;
+      console.log (res.data)
+      console.log(accessToken)
+      if (remember) {
+        localStorage.setItem("token", accessToken);
+      } else {
+        sessionStorage.setItem("token", accessToken);
+      }
+      setSuccess(true);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   const handleGoogleLogin = (e) => {
@@ -36,14 +53,13 @@ export default function Login() {
               label="Email"
               id="email"
               type="email"
-              placeholder="email@example.com"
+              placeholder="votre@email.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
               onFocus={() => setFocused("email")}
               isFocused={focused === "email"}
-              icon="✉"
             />
 
             <InputField
@@ -57,7 +73,6 @@ export default function Login() {
               }}
               onFocus={() => setFocused("password")}
               isFocused={focused === "password"}
-              icon="🔒"
             />
 
             <div className="row">
@@ -94,14 +109,10 @@ export default function Login() {
             </button>
 
             <p className="signup-text">
-              Don&apos;t have an account?{" "}
-              <a
-                href="#"
-                className="signup-link"
-                onClick={(e) => e.preventDefault()}
-              >
+              vous n'avez pas de compte?{" "}
+              <Link to="/register" className="signup-link">
                 Créer un compte
-              </a>
+              </Link>
             </p>
           </>
         ) : (
