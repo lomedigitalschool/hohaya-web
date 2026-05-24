@@ -3,8 +3,10 @@ import api from "../../services/Api";
 import { Link } from "react-router-dom";
 import GoogleIcon from "../../components/GoogleIcon";
 import InputField from "../../components/InputField";
+import useAuthStore from "../../stores/useAuthStore";
 
 export default function Login() {
+  const login = useAuthStore((state) => state.login);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -17,15 +19,15 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await api.post("/auth/login", { email, password });
-      localStorage.clear()
-      const accessToken  = res.data.accessToken;
-      const refreshToken = res.data.refreshToken;
-      console.log (res.data)
-      console.log(accessToken)
+      // console.log (res.data)
+      // console.log(accessToken)
+      // console.log(refreshToken)
       if (remember) {
-        localStorage.setItem("token", accessToken);
+        login(res.data);
       } else {
-        sessionStorage.setItem("token", accessToken);
+        sessionStorage.setItem("accessToken", res.data.accessToken);
+        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        sessionStorage.setItem("user", JSON.stringify(res.data.user));
       }
       setSuccess(true);
     } catch (error) {
