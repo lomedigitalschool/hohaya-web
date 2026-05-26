@@ -1,11 +1,25 @@
 
+import { forwardRef } from "react";
 
 
 
 
 
-export default function InputField({ label, id, type = "text", placeholder, value, onChange, onFocus, isFocused, error, icon}) {
-
+const InputField = forwardRef(
+  (
+    {
+      label,
+      id,
+      type = "text",
+      placeholder,
+      onFocus,
+      isFocused,
+      error,
+      icon,
+      ...rest
+    },
+    ref
+  ) => {
   
   return (
     <div className='field-wrapper' >
@@ -14,10 +28,10 @@ export default function InputField({ label, id, type = "text", placeholder, valu
         <span className='input-icon'>{icon}</span>
         <input
           id={id}
+          ref={ref}
+           {...rest}
           type={type}
           placeholder={placeholder}
-          value={value}
-          onChange={onChange}
           onFocus={onFocus}
           className={`input ${isFocused ? "input-focus" : ""} ${error ?  "input-error" : ""}`}
           // autoComplete={id}
@@ -27,5 +41,8 @@ export default function InputField({ label, id, type = "text", placeholder, valu
     </div>
   );
 }
+)
+
+export default InputField;
 
 

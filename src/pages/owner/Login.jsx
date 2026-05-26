@@ -4,25 +4,43 @@ import { Link } from "react-router-dom";
 import GoogleIcon from "../../components/GoogleIcon";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { loginSchema } from "../../schemas/auth.schema";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
   const login = useAuthStore((state) => state.login);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [remember, setRemember] = useState(false);
   const [focused, setFocused] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: valibotResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+  });
+
+  const handleLogin = async (data) => {
+    console.log("FORM DATA =>", data);
+console.log(api.defaults.baseURL);
+console.log("BASE URL:", api.defaults.baseURL);
+console.log("FULL CALL:", api.post.toString?.());
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
       // console.log (res.data)
       // console.log(accessToken)
       // console.log(refreshToken)
-      if (remember) {
+      if (data.remember) {
         login(res.data);
       } else {
         sessionStorage.setItem("accessToken", res.data.accessToken);
@@ -44,59 +62,57 @@ export default function Login() {
   return (
     <div className="container-login">
       <div className="card">
+        <form onSubmit={handleSubmit(handleLogin)}>
         {!success ? (
           <>
             <h1 className="title">Connexion</h1>
             <p className="subtitle">
               Connectez-vous à votre compte pour continuer
             </p>
-
+            {/* Email */}
             <InputField
+              {...register("email")}
               label="Email"
               id="email"
               type="email"
-              placeholder="votre@email.com"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              placeholder="email@example.com"
               onFocus={() => setFocused("email")}
               isFocused={focused === "email"}
+              error={errors.email?.message || null}
             />
 
+            {/* Password */}
             <InputField
-              label="Password"
+              {...register("password")}
+              label="Mot de passe"
               id="password"
               type={showPw ? "text" : "password"}
               placeholder="••••••••"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
               onFocus={() => setFocused("password")}
               isFocused={focused === "password"}
+              error={errors.password?.message || null}
             />
+
 
             <div className="row">
               <label className="checkbox-label">
                 <input
                   type="checkbox"
-                  checked={remember}
-                  onChange={(e) => setRemember(e.target.checked)}
+                  {...register("remember")}
                 />
                 Se souvenir de moi
               </label>
-              <a href="#" onClick={(e) => e.preventDefault()}>
+              <a href="#">
                 Mot de passe oublié?
               </a>
             </div>
 
             <button
               className="btn-primary"
-              onClick={handleLogin}
-              disabled={loading}
+              type="submit"
+              disabled={isSubmitting}
             >
-              {loading ? "En cours…" : "Se connecter"}
+              {isSubmitting ? "En cours…" : "Se connecter"}
             </button>
 
             <div className="divider">
@@ -124,6 +140,7 @@ export default function Login() {
             <p className="success-sub">Redirection vers le tableau de bord…</p>
           </div>
         )}
+        </form>
       </div>
     </div>
   );
