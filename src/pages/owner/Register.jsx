@@ -33,6 +33,7 @@ export default function Register() {
   const [showConfirmPw, setShowConfirmPw] = useState(false);
 
   const handleRegister = async (data) => {
+    console.log(data)
 
     try {
       const res = await api.post("/auth/register", {
@@ -42,7 +43,7 @@ export default function Register() {
         password: data.password,
         role: data.role,
         phoneNumber: data.phoneNumber,
-        location: data.location
+        location: { city: data.location }
       });
       if (data.remember) {
         login(res.data);
@@ -89,7 +90,7 @@ export default function Register() {
               <div className="row-fields">
                 <InputField
                   {...register("firstName")}
-                  label="Prénom"
+                  label="Prénom :"
                   id="firstName"
                   placeholder="Votre prénom"
                   onFocus={() => setFocused("firstName")}
@@ -98,7 +99,7 @@ export default function Register() {
                 />
                 <InputField
                   {...register("lastName")}
-                  label="Nom"
+                  label="Nom :"
                   id="lastName"
                   placeholder="Votre nom"
                   onFocus={() => setFocused("lastName")}
@@ -109,16 +110,16 @@ export default function Register() {
               <div className="row-fields">
                 <InputField
                   {...register("phoneNumber")}
-                  label="Tel"
+                  label="Tel :"
                   id="phoneNumber"
-                  placeholder="numéro de téléphone"
+                  placeholder="Numéro de téléphone"
                   onFocus={() => setFocused("phoneNumber")}
                   isFocused={focused === "phoneNumber"}
                   error={errors.phoneNumber?.message || null}
                 />
                 <InputField
                   {...register("location")}
-                  label="Localisation"
+                  label="Localisation :"
                   id="location"
                   placeholder="Votre localisation"
                   onFocus={() => setFocused("location")}
@@ -127,7 +128,7 @@ export default function Register() {
                 />
                 <InputField
                   {...register("role")}
-                  label="Rôle"
+                  label="Rôle :"
                   id="role"
                   placeholder="Votre rôle"
                   onFocus={() => setFocused("role")}
@@ -140,7 +141,7 @@ export default function Register() {
               {/* Email */}
               <InputField
                 {...register("email")}
-                label="Email"
+                label="Email :"
                 id="email"
                 type="email"
                 placeholder="email@example.com"
@@ -152,7 +153,7 @@ export default function Register() {
               {/* Password */}
               <InputField
                 {...register("password")}
-                label="Mot de passe"
+                label="Mot de passe :"
                 id="password"
                 type={showPw ? "text" : "password"}
                 placeholder="••••••••"
@@ -164,7 +165,7 @@ export default function Register() {
               {/* Confirm Password */}
               <InputField
                 {...register("confirmPassword")}
-                label="Confirmer le mot de passe"
+                label="Confirmer le mot de passe :"
                 id="confirmPassword"
                 type={showConfirmPw ? "text" : "password"}
                 placeholder="••••••••"

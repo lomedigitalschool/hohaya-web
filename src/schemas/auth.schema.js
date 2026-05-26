@@ -35,7 +35,8 @@ export const registerSchema = object({
     minLength(1, "Le role est requis"),
   ]),
   location: string ([
-    trim()
+    trim(),
+    minLength(1, "La localisation est requise"),
   ]),
 
   email: string([
