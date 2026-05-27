@@ -1,12 +1,14 @@
 import { useState } from "react";
 import api from "../../services/Api";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate  } from "react-router-dom";
 import GoogleIcon from "../../components/GoogleIcon";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { registerSchema } from "../../schemas/auth.schema";
 import { useForm } from "react-hook-form";
+
+
 
 export default function Register() {
   const {
@@ -26,9 +28,9 @@ export default function Register() {
       remember: false,
     },
   });
+  const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
   const [focused, setFocused] = useState(null);
-  const [success, setSuccess] = useState(false);
   const [showPw, setShowPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
 
@@ -53,6 +55,7 @@ export default function Register() {
         sessionStorage.setItem("refreshToken", res.data.refreshToken);
       }
       setSuccess(true);
+      navigate("/home");
     } catch (error) {
       console.error("Register error:", error);
     } finally {
@@ -69,7 +72,6 @@ export default function Register() {
     <div className="container-login">
       <div className="card">
         <form onSubmit={handleSubmit(handleRegister)}>
-          {!success ? (
             <>
               <h1 className="title">Créer un compte</h1>
               <p className="subtitle">
@@ -191,15 +193,6 @@ export default function Register() {
                 </Link>
               </p>
             </>
-          ) : (
-            <div className="success-box">
-              <div className="success-icon">🎉</div>
-              <p className="success-title">Compte créé avec succès!</p>
-              <p className="success-sub">
-                Vérifiez votre email pour activer votre compte.
-              </p>
-            </div>
-          )}
         </form>
       </div>
     </div>
