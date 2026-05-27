@@ -28,18 +28,12 @@ export default function Login() {
   });
 
   const handleLogin = async (data) => {
-    console.log("FORM DATA =>", data);
-console.log(api.defaults.baseURL);
-console.log("BASE URL:", api.defaults.baseURL);
-console.log("FULL CALL:", api.post.toString?.());
     try {
       const res = await api.post("/auth/login", {
         email: data.email,
         password: data.password,
       });
       // console.log (res.data)
-      // console.log(accessToken)
-      // console.log(refreshToken)
       if (data.remember) {
         login(res.data);
       } else {

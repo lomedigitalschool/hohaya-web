@@ -33,7 +33,7 @@ export default function Register() {
   const [showConfirmPw, setShowConfirmPw] = useState(false);
 
   const handleRegister = async (data) => {
-    console.log(data)
+    // console.log(data)
 
     try {
       const res = await api.post("/auth/register", {
