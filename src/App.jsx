@@ -5,6 +5,7 @@ import './App.css'
 import Login from './pages/owner/Login'
 import Register from './pages/owner/Register'
 import Home from './pages/pulic/Home'
+import Admin from './pages/Admin';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </>
   )
