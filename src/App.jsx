@@ -1,4 +1,3 @@
-import Admin from './pages/Admin'
 import { useState } from 'react'
 import { Routes, Route, Link } from "react-router-dom";
 import './App.css'
@@ -15,7 +14,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<Admin />} />
       </Routes>
     </>
   )
