@@ -77,37 +77,37 @@ function Properties() {
   const propertiesData = [
     {
       title: "Villa Plage Akodessewa",
-      price: "489 000 €",
+      price: "320 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Superbe maison moderne avec un espace de vie ouvert et une luminosité naturelle exceptionnelle."
     },
     {
       title: "Villa Boulevard Tokoin",
-      price: "846 000 €",
+      price: "550 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Domaine de luxe avec finitions haut de gamme, piscine privée et vastes espaces de réception extérieurs."
     },
     {
       title: "Manoir Segbe CMS",
-      price: "1 173 000 €",
+      price: "770 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Un chef-d'œuvre architectural époustouflant situé au cœur du quartier le plus exclusif."
     },
     {
       title: "Retraite Rafiti",
-      price: "387 000 €",
+      price: "250 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1600566753086-00f18efc2291?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Maison de banlieue chaleureuse et charmante, parfaite pour les familles avec son grand jardin."
     },
     {
       title: "Lodge Vallée Dodji",
-      price: "745 000 €",
+      price: "490 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Propriété minimaliste moderne entourée de nature, offrant une tranquillité et une paix absolues."
     },
     {
       title: "Domaine Colline Clet",
-      price: "287 000 €",
+      price: "185 000 000 FCFA",
       img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       desc: "Excellente opportunité d'investissement dans un quartier en plein développement avec de superbes commodités."
     }
@@ -221,7 +221,7 @@ function AboutUs() {
           <div className="grid grid-cols-1 sm:grid-cols-3 pt-10 gap-6">
             <AnimatedCounter target={1200} prefix="+" text="Propriétés Vendues" />
             <AnimatedCounter target={98} suffix="%" text="Satisfaction Client" />
-            <AnimatedCounter target={500} prefix="€" suffix="M+" text="En Transactions" />
+            <AnimatedCounter target={325} prefix="+" suffix=" Mds" text="FCFA en Transactions" />
           </div>
         </div>
         <div className="w-full lg:w-1/2 flex justify-center order-1 lg:order-2">
@@ -510,7 +510,7 @@ function Footer() {
             <ul className="space-y-3 text-gray-500">
               <li className="flex items-start gap-3">
                 <span className="text-blue-500">📍</span>
-                4517 Washington Ave. Manchester, Kentucky 39495
+                Boulevard du 13 Janvier, Tokoin, Lomé, Togo
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-blue-500">✉️</span>
@@ -518,7 +518,7 @@ function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <span className="text-blue-500">📞</span>
-                (406) 555-0120
+                +228 22 21 01 20 / +228 90 05 55 01
               </li>
             </ul>
           </div>
