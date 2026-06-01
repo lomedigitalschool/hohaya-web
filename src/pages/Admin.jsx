@@ -12,7 +12,7 @@ function Admin() {
       <aside style={{ width: "220px", borderRight: "1px solid #f0f0f0", display: "flex", flexDirection: "column", padding: "28px 16px" }}>
 
         <div style={{ marginBottom: "36px" }}>
-          <span style={{ fontSize: "18px", fontWeight: "bold" }}>boosto</span>
+          <span style={{ fontSize: "18px", fontWeight: "bold" }}>Hohaya</span>
         </div>
 
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "36px" }}>
