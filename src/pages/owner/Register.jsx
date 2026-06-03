@@ -155,17 +155,17 @@ export default function Register() {
                     />
                     {suggestions.length > 0 && (
                       <ul className="absolute max-w-40 z-20 bg-white border w-full">
-                        {suggestions.map((item) => (
+                        {suggestions.map((item ,index) => (
                           <li
-                            key={item.place_id}
+                            key={index}
                             onClick={() => {
-                              field.onChange(item.display_name);
+                              field.onChange(item.city); // update react-hook-form state
                               setSuggestions([]);
-                              console.log(item.display_name);
+                              console.log(item.city);
                             }}
                             className="p-2 cursor-pointer hover:bg-gray-100"
                           >
-                            {item.display_name.split(",")[0]}
+                            {item.city}, {item.country}
                           </li>
                         ))}
                       </ul>

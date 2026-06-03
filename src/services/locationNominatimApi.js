@@ -13,10 +13,34 @@ export const searchLocation = async (query) => {
   const { data } = await locationApi.get("/search", {
     params: {
       q: query,
-      format: "jsonv2",
-      limit: 5,
+      format: "geocodejson",
+      addressdetails: 1,
+      limit: 10,
     },
   });
+
+  const locations = data.features.map((feature) => {
+    const geo = feature.properties.geocoding;
+
+    return {
+      city: geo.city || geo.town || geo.village || geo.name,
+      country: geo.country,
+    };
+  }).filter(
+    (item) =>
+      item.city &&
+      item.city.toLowerCase().startsWith(query.toLowerCase())
+  );
+
+  return locations.filter(
+    (location, index, self) =>
+      index ===
+      self.findIndex(
+        (item) =>
+          item.city === location.city &&
+          item.country === location.country
+      )
+  );
 
   return data;
 };
