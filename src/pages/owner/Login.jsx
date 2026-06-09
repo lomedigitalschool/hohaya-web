@@ -1,12 +1,15 @@
 import { useState } from "react";
 import api from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleIcon from "../../components/GoogleIcon";
+import GoogleIcon from "../../components/auth/GoogleIcon";
+import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { loginSchema } from "../../schemas/auth.schema";
 import { useForm } from "react-hook-form";
+
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,6 +17,8 @@ export default function Login() {
   const [showPw, setShowPw] = useState(false);
   const [focused, setFocused] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   const {
     register,
@@ -49,10 +54,17 @@ export default function Login() {
     }
   };
 
+
+  
+
+
+  //  intégrer OAuth Google 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    // TODO: intégrer OAuth Google
-    alert("Google OAuth — à connecter !");
+     setClicked(true);
+    /* global google */
+    google.accounts.id.prompt();
+    
   };
 
   return (
@@ -110,10 +122,7 @@ export default function Login() {
                 <hr className="divider-line" />
               </div>
 
-              <button className="btn-google" onClick={handleGoogleLogin}>
-                <GoogleIcon />
-                Se connecter avec Google
-              </button>
+              <GoogleLoginButton />
 
               <p className="signup-text">
                 vous n'avez pas de compte?{" "}

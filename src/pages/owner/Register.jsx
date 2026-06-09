@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleIcon from "../../components/GoogleIcon";
+import GoogleIcon from "../../components/auth/GoogleIcon";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
 import { valibotResolver } from "@hookform/resolvers/valibot";
