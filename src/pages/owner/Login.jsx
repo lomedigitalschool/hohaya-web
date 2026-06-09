@@ -55,18 +55,6 @@ export default function Login() {
   };
 
 
-  
-
-
-  //  intégrer OAuth Google 
-  const handleGoogleLogin = (e) => {
-    e.preventDefault();
-     setClicked(true);
-    /* global google */
-    google.accounts.id.prompt();
-    
-  };
-
   return (
     <div className="container-login">
       <div className="card">
@@ -122,7 +110,7 @@ export default function Login() {
                 <hr className="divider-line" />
               </div>
 
-              <GoogleLoginButton />
+              <GoogleLoginButton /> 
 
               <p className="signup-text">
                 vous n'avez pas de compte?{" "}

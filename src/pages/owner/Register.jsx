@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import GoogleIcon from "../../components/auth/GoogleIcon";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
+import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { registerSchema } from "../../schemas/auth.schema";
 import { useForm, Controller } from "react-hook-form";
@@ -94,11 +95,8 @@ export default function Register() {
           <>
             <h1 className="title">Créer un compte</h1>
             <p className="subtitle">Commencez votre aventure — c'est gratuit</p>
-
-            <button className="btn-google" onClick={handleGoogleRegister}>
-              <GoogleIcon />
-              S'inscrire avec Google
-            </button>
+            <GoogleLoginButton />
+            
             <div className="divider">
               <hr className="divider-line" />
               <span className="divider-text">Ou créer avec Email</span>
