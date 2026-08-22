@@ -1,7 +1,6 @@
 import { useState } from "react";
 import api from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleIcon from "../../components/auth/GoogleIcon";
 import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
 import InputField from "../../components/InputField";
 import useAuthStore from "../../stores/useAuthStore";
@@ -48,7 +47,7 @@ export default function Login() {
         sessionStorage.setItem("user", JSON.stringify(res.data.user));
       }
       setSuccess(true);
-      navigate("/home");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
     }

@@ -1,112 +1,144 @@
-import React, { useState } from "react";
-// import "./profil.css";
+import { useEffect, useState } from "react";
+import api from "../../services/Api";
+import useAuthStore from "../../stores/useAuthStore";
+import InputField from "../../components/InputField";
 
-export const Profil = () => {
-    const [owner, setOwner] = useState({
-        fullname: "",
-        email: "",
-        phone: "",
-        city: "",
-        bio: "Propriétaire de plusieurs appartements modernes.",
-        profileImage:
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-    });
+export default function Profil() {
+  const storedUser = useAuthStore((s) => s.user);
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    city: "",
+  });
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState(null);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+  useEffect(() => {
+    let cancelled = false;
 
-        setOwner({
-            ...owner,
-            [name]: value,
-        });
+    async function loadProfile() {
+      setLoading(true);
+      try {
+        const res = await api.get("/users/me");
+        const user = res.data?.user;
+        if (!cancelled && user && Object.keys(user).length > 0) {
+          setForm({
+            firstName: user.firstName ?? "",
+            lastName: user.lastName ?? "",
+            email: user.email ?? "",
+            phoneNumber: user.phoneNumber ?? "",
+            city: user.location?.city ?? "",
+          });
+        } else if (!cancelled && storedUser) {
+          setForm((f) => ({ ...f, email: storedUser.email ?? "" }));
+        }
+      } catch (err) {
+        console.error("Load profile error:", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadProfile();
+    return () => {
+      cancelled = true;
     };
+  }, [storedUser]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
 
-        console.log("Profil mis à jour :", owner);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage(null);
+    try {
+      await api.put("/users/me", {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        phoneNumber: form.phoneNumber,
+        location: { city: form.city },
+      });
+      setMessage({ type: "success", text: "Profil mis à jour." });
+    } catch (err) {
+      console.error("Update profile error:", err);
+      setMessage({ type: "error", text: "La mise à jour a échoué." });
+    } finally {
+      setSaving(false);
+    }
+  };
 
-        // API CALL ICI
-        // axios.put(...)
-    };
+  if (loading) {
+    return <p className="text-gray-500">Chargement du profil…</p>;
+  }
 
-    return (
-        <div className="profile-container">
-            <div className="profile-card">
+  return (
+    <div className="max-w-2xl">
+      <h1 className="text-2xl font-bold text-gray-900 mb-1">Mon profil</h1>
+      <p className="text-gray-500 mb-8">Gérez vos informations personnelles</p>
 
-                <div className="profile-header">
-                    <img
-                        src={owner.profileImage}
-                        width={100}
-                        height={100}
-                        alt="profile"
-                        className="profile-image"
-                    />
-
-                    <h2>{owner.fullname}</h2>
-                    <p>Nom et prenom de Propriétaire</p>
-                </div>
-
-                <form className="profile-form" onSubmit={handleSubmit}>
-
-                    <div className="form-group">
-                        <label>Nom complet</label>
-                        <input
-                            type="text"
-                            name="fullname"
-                            value={owner.fullname}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={owner.email}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Téléphone</label>
-                        <input
-                            type="text"
-                            name="phone"
-                            value={owner.phone}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Ville</label>
-                        <input
-                            type="text"
-                            name="city"
-                            value={owner.city}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Biographie</label>
-                        <textarea
-                            name="bio"
-                            rows="4"
-                            value={owner.bio}
-                            onChange={handleChange}
-                        ></textarea>
-                    </div>
-
-                    <button type="submit" className="save-btn">
-                        Sauvegarder
-                    </button>
-
-                </form>
-            </div>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 space-y-4"
+      >
+        <div className="row-fields">
+          <InputField
+            label="Prénom"
+            id="firstName"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleChange}
+          />
+          <InputField
+            label="Nom"
+            id="lastName"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleChange}
+          />
         </div>
-    );
-};
 
-export default Profil;
+        <InputField
+          label="Email"
+          id="email"
+          name="email"
+          type="email"
+          value={form.email}
+          disabled
+          onChange={() => {}}
+        />
+
+        <InputField
+          label="Téléphone"
+          id="phoneNumber"
+          name="phoneNumber"
+          value={form.phoneNumber}
+          onChange={handleChange}
+        />
+
+        <InputField
+          label="Ville"
+          id="city"
+          name="city"
+          value={form.city}
+          onChange={handleChange}
+        />
+
+        {message && (
+          <p className={message.type === "error" ? "error-text" : "text-sm text-green-600"}>
+            {message.text}
+          </p>
+        )}
+
+        <button className="btn-primary" type="submit" disabled={saving}>
+          {saving ? "Enregistrement…" : "Enregistrer"}
+        </button>
+      </form>
+    </div>
+  );
+}

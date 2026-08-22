@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleIcon from "../../components/auth/GoogleIcon";
 import InputField from "../../components/InputField";
-import useAuthStore from "../../stores/useAuthStore";
 import GoogleLoginButton from "../../components/auth/GoogleLoginButton";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { registerSchema } from "../../schemas/auth.schema";
@@ -22,7 +20,7 @@ export default function Register() {
     defaultValues: {
       firstName: "",
       lastName: "",
-      role: "tenant",
+      role: "owner",
       location: "",
       phoneNumber: "",
       email: "",
@@ -32,7 +30,6 @@ export default function Register() {
     },
   });
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
   const [focused, setFocused] = useState(null);
   const [showPw, setShowPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
@@ -58,7 +55,7 @@ export default function Register() {
     // console.log(data)
 
     try {
-      const res = await api.post("/auth/register", {
+      await api.post("/auth/register", {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
@@ -67,25 +64,11 @@ export default function Register() {
         phoneNumber: data.phoneNumber,
         location: { city: data.location },
       });
-      if (data.remember) {
-        login(res.data);
-      } else {
-        sessionStorage.setItem("token", res.data.accesToken);
-        sessionStorage.setItem("user", JSON.stringify(res.data.user));
-        sessionStorage.setItem("refreshToken", res.data.refreshToken);
-      }
-      setSuccess(true);
-      navigate("/home");
+      // L'inscription ne renvoie pas de session : on redirige vers la connexion.
+      navigate("/login");
     } catch (error) {
       console.error("Register error:", error);
-    } finally {
     }
-  };
-
-  const handleGoogleRegister = (e) => {
-    e.preventDefault();
-    // TODO: intégrer OAuth Google
-    alert("Google OAuth — à connecter !");
   };
 
   return (

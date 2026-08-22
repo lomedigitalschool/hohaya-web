@@ -1,36 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-function Navbar() {
-  return (
-    <nav className="flex items-center flex-wrap py-6">
-      <div className="flex flex-wrap gap-5 justify-between w-full">
-        <div className="w-20 h-12 shrink-0 flex items-center">
-          <a href="#" className="text-2xl font-black tracking-tighter text-gray-900">
-            {/* Si vous souhaitez utiliser l'image du logo, décommentez ceci et supprimez le texte ci-dessus :
-            <img className="w-auto h-full" alt="HOHAYA" src="/images/IMG_7352.PNG" /> */}
-            HOHAYA
-          </a>
-        </div>
-        <div className="flex flex-wrap">
-          <ul className="flex flex-wrap bg-gray-800 text-gray-100 justify-center gap-4 lg:gap-6 pl-1 pr-4 py-1 items-center rounded-full text-sm lg:text-base">
-            <li className="bg-white text-gray-900 py-2 px-4 hover:bg-gray-200 shadow-xl rounded-3xl"><a href="#home">Accueil</a></li>
-            <li><a href="#properties" className="bg-gray-800 py-2 px-4 rounded-3xl shadow-xl hover:bg-gray-100 hover:text-gray-900">Propriétés</a></li>
-            <li><a href="#about" className="bg-gray-800 py-2 px-4 rounded-3xl shadow-xl hover:bg-gray-100 hover:text-gray-900">À Propos</a></li>
-            <li className="hidden md:block"><a href="#testimonials" className="bg-gray-800 py-2 px-4 rounded-3xl shadow-xl hover:bg-gray-100 hover:text-gray-900">Témoignages</a></li>
-            <li className="hidden md:block"><a href="#blog" className="bg-gray-800 py-2 px-4 rounded-3xl shadow-xl hover:bg-gray-100 hover:text-gray-900">Blog</a></li>
-            <li className="hidden md:block"><a href="#faq" className="bg-gray-800 py-2 px-4 rounded-3xl shadow-xl hover:bg-gray-100 hover:text-gray-900">FAQ</a></li>
-          </ul>
-        </div>
-        <div className="flex items-center">
-          <Link to="/login" className="bg-gray-900 text-white hover:bg-gray-800 py-2.5 px-6 rounded-full text-sm lg:text-base font-semibold transition shadow-sm">
-            Se Connecter
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
+import Navbar from '../../components/public/Navbar';
+import Footer from '../../components/public/Footer';
 
 function Hero() {
   return (
@@ -163,6 +134,15 @@ function Properties() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="flex justify-center mt-12">
+          <Link
+            to="/properties"
+            className="bg-gray-900 text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:bg-gray-800 hover:shadow-2xl transition"
+          >
+            Voir toutes les propriétés &rarr;
+          </Link>
         </div>
       </div>
     </section>
@@ -471,69 +451,6 @@ function FAQ() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="bg-white border-t border-gray-100 pt-16 pb-8">
-      <div className="px-6 lg:px-20 mb-12 flex flex-col lg:flex-row justify-between gap-10">
-        <div className="w-full lg:w-1/3">
-          <a href="#" className="text-3xl font-black tracking-tighter text-gray-900 mb-6 block">
-            HOHAYA.
-          </a>
-          <p className="text-gray-500 leading-relaxed max-w-sm">
-            Nous offrons un service complet pour la vente, l'achat ou la location de biens immobiliers. Nous opérons depuis plus de 10 ans.
-          </p>
-        </div>
-        <div className="w-full lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-bold text-gray-900 mb-4">Entreprise</h3>
-            <ul className="space-y-3 text-gray-500">
-              <li><a href="#" className="hover:text-blue-600 transition">À Propos</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Nos Services</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Carrières</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-bold text-gray-900 mb-4">Liens Rapides</h3>
-            <ul className="space-y-3 text-gray-500">
-              <li><a href="#" className="hover:text-blue-600 transition">Rechercher des Propriétés</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Vendre votre Maison</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Rapports de Marché</a></li>
-              <li><a href="#" className="hover:text-blue-600 transition">Agents</a></li>
-            </ul>
-          </div>
-          <div className="col-span-2 md:col-span-2">
-            <h3 className="font-bold text-gray-900 mb-4">Contact</h3>
-            <ul className="space-y-3 text-gray-500">
-              <li className="flex items-start gap-3">
-                <span className="text-blue-500">📍</span>
-                Boulevard du 13 Janvier, Tokoin, Lomé, Togo
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-blue-500">✉️</span>
-                hello@hohaya.com
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-blue-500">📞</span>
-                +228 22 21 01 20 / +228 90 05 55 01
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-6 lg:px-20 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-gray-500 text-sm font-medium">© 2026 Hohaya. Tous droits réservés.</p>
-        <div className="flex gap-6 text-sm font-medium text-gray-500">
-          <a href="#" className="hover:text-gray-900 transition">Politique de Confidentialité</a>
-          <a href="#" className="hover:text-gray-900 transition">Conditions d'Utilisation</a>
-          <a href="#" className="hover:text-gray-900 transition">Paramètres des Cookies</a>
-        </div>
-      </div>
-    </footer>
   );
 }
 

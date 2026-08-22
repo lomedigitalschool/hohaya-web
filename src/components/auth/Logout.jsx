@@ -1,4 +1,4 @@
-import useAuthStore from "../../store/useAuthStore";
+import useAuthStore from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
 export default function LogoutButton() {
@@ -7,8 +7,16 @@ export default function LogoutButton() {
 
   const handleLogout = () => {
     logout();
+    sessionStorage.clear();
     navigate("/login");
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button
+      onClick={handleLogout}
+      className="w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition"
+    >
+      Déconnexion
+    </button>
+  );
 }

@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { useGoogleLogin, GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import useAuthStore from "../../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
+import api from "../../services/Api";
 
 export default function GoogleLoginButton() {
   const login = useAuthStore((s) => s.login);
@@ -15,8 +14,11 @@ export default function GoogleLoginButton() {
       token: idToken,
     });
     const data = res.data;
-    // console.log("Backend response:", data);
-    login(data);
+    login({
+      accessToken: data.token,
+      refreshToken: data.refreshToken ?? null,
+      user: data.user,
+    });
     navigate("/dashboard");
   };
 
