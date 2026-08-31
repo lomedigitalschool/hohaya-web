@@ -9,7 +9,7 @@ function Navbar() {
           <a href="#" className="text-2xl font-black tracking-tighter text-gray-900">
             {/* Si vous souhaitez utiliser l'image du logo, décommentez ceci et supprimez le texte ci-dessus :
             <img className="w-auto h-full" alt="HOHAYA" src="/images/IMG_7352.PNG" /> */}
-            HOHAYA.
+            HOHAYA
           </a>
         </div>
         <div className="flex flex-wrap">
